@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import android.webkit.ConsoleMessage;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragment;
@@ -49,6 +50,7 @@ public class IndexFragment extends SherlockFragment {
 		container.removeAllViews();
 		mWebViewIndex = (WebView) view.findViewById(R.id.webview_new_post);
 		mWebViewIndex.getSettings().setJavaScriptEnabled(true);
+		
 		Boolean isRedirected = null;
 		try {
 			isRedirected = getArguments().getBoolean(
@@ -89,8 +91,20 @@ public class IndexFragment extends SherlockFragment {
 				return true;
 			}
 		});
+		mWebViewIndex.setWebViewClient(new WebViewClient() {  
+		    @Override  
+		    public void onPageFinished(WebView view, String url)  
+		    {  
+		        /* This call inject JavaScript into the page which just finished loading. */  
+		    	mWebViewIndex.loadUrl("javascript: var elem = window.document.getElementById('wrap').getElementsByTagName('div')[0];" +
+		    			"var pTop = elem.clientHeight;" +
+		    			"elem.parentNode.removeChild(elem);" +
+		    			"window.document.getElementById('wrap').getElementsByClassName('container')[0].style.margin='-50px 0px 0px 0px';");  
+		    }  
+		});  	
 		mWebViewIndex
 				.loadUrl("file:///android_asset/PrivlyApplications/Index/new.html");
+		
 	}
 
 	/**
