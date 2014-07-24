@@ -99,7 +99,8 @@ public class IndexFragment extends SherlockFragment {
 		    	mWebViewIndex.loadUrl("javascript: var elem = window.document.getElementById('wrap').getElementsByTagName('div')[0];" +
 		    			"var pTop = elem.clientHeight;" +
 		    			"elem.parentNode.removeChild(elem);" +
-		    			"window.document.getElementById('wrap').getElementsByClassName('container')[0].style.margin=-pTop+'px 0px 0px 0px';");  
+		    			"window.document.getElementById('wrap').getElementsByTagName('div')[0].setAttribute(\"style\",\"margin-top:\" +\"-\"+ pTop.toString() + \"px\");"
+		    			); 
 		    }  
 		});  	
 		mWebViewIndex
